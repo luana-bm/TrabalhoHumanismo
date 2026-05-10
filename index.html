@@ -1,0 +1,571 @@
+<!DOCTYPE html>
+<html lang="pt-BR">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0, user-scalable=no">
+    <title>Apresentação de Slides - Humanismo
+    </title>
+    <style>
+        * {
+            margin: 0;
+            padding: 0;
+            box-sizing: border-box;
+            user-select: none; /* Evita seleção acidental durante cliques rápidos */
+        }
+
+        body {
+            font-family: 'Segoe UI', 'Roboto', 'Helvetica Neue', sans-serif;
+            background: linear-gradient(145deg, #fcbda1 0%, #fca27c 100%);
+            min-height: 100vh;
+            display: flex;
+            align-items: center;
+            justify-content: center;
+            overflow: hidden;
+            position: relative;
+        }
+
+        /* Container principal que simula a tela de projeção */
+        .slideshow-container {
+            width: 100vw;
+            height: 100vh;
+            display: flex;
+            align-items: stretch;
+            justify-content: space-between;
+            background: radial-gradient(circle at center, #fad3c2 0%, #ffa883 100%);
+            box-shadow: inset 0 0 40px rgba(0,0,0,0.5);
+        }
+
+        /* ========== BOTÕES LATERAIS ========== */
+        .nav-btn {
+            flex: 0 0 100px;      /* Largura fixa confortável para cliques */
+            display: flex;
+            align-items: center;
+            justify-content: center;
+            transition: all 0.2s ease;
+            cursor: pointer;
+            background: #bd7a5d;
+            backdrop-filter: blur(6px);
+            border: none;
+            outline: none;
+            z-index: 20;
+            box-shadow: -4px 0 12px rgba(0,0,0,0.2);
+            transition: background 0.25s, backdrop-filter 0.2s, transform 0.1s;
+        }
+
+        /* Efeito hover nos botões laterais */
+        .nav-btn:hover {
+            background: #df9372;
+            backdrop-filter: blur(10px);
+        }
+
+        .nav-btn:active {
+            transform: scale(0.97);
+        }
+
+        /* Botão esquerdo com sombra direcional */
+        .btn-left {
+            border-radius: 0 28px 28px 0;
+            box-shadow: 4px 0 15px rgba(0,0,0,0.3);
+        }
+
+        /* Botão direito */
+        .btn-right {
+            border-radius: 28px 0 0 28px;
+            box-shadow: -4px 0 15px rgba(0,0,0,0.3);
+        }
+
+        /* Ícones / setas dentro dos botões */
+        .arrow {
+            font-size: 4rem;
+            font-weight: 900;
+            color: white;
+            text-shadow: 0 2px 8px rgba(0,0,0,0.5);
+            transition: transform 0.1s;
+            font-family: monospace;
+            letter-spacing: -4px;
+        }
+
+        .nav-btn:hover .arrow {
+            transform: scale(1.08);
+            text-shadow: 0 0 12px rgba(255,245,200,0.8);
+        }
+
+        /* ========== ÁREA CENTRAL - O SLIDE PRINCIPAL ========== */
+        .slide-area {
+            flex: 1;
+            display: flex;
+            align-items: center;
+            justify-content: center;
+            padding: 2rem;
+            background: rgba(0, 0, 0, 0.25);
+            overflow-y: auto;
+            scrollbar-width: thin;
+        }
+
+        /* Card do conteúdo central — estética moderna e legível */
+        .slide-card {
+            max-width: 1500px;
+            width: 100%;
+            background: #ffe7dc;
+            backdrop-filter: blur(2px);
+            border-radius: 64px 48px 64px 48px;
+            box-shadow: 0 30px 45px rgba(0, 0, 0, 0.4), 0 0 0 1px rgba(255,255,200,0.2);
+            padding: 2.8rem 3rem;
+            transition: all 0.3s cubic-bezier(0.2, 0.9, 0.4, 1.1);
+            text-align: center;
+            animation: fadeSlide 0.4s ease-out;
+        }
+
+        /* animação suave ao trocar de slide */
+        @keyframes fadeSlide {
+            0% {
+                opacity: 0;
+                transform: translateY(12px) scale(0.98);
+            }
+            100% {
+                opacity: 1;
+                transform: translateY(0) scale(1);
+            }
+        }
+
+        /* Títulos e textos com tipografia refinada */
+        .slide-title {
+            font-size: 2.8rem;
+            font-weight: 800;
+            margin-bottom: 1.5rem;
+            background: linear-gradient(135deg, #1F4C5C, #2b7a62);
+            background-clip: text;
+            -webkit-background-clip: text;
+            color: transparent;
+            letter-spacing: -0.5px;
+        }
+
+        .slide-content {
+            font-size: 1.35rem;
+            line-height: 1.55;
+            color: #1e2f3a;
+            margin: 1.8rem 0;
+            font-weight: 500;
+        }
+
+        /* Estilo específico para imagens dentro do conteúdo */
+        .slide-content img {
+            max-width: 100%;
+            border-radius: 16px;
+            box-shadow: 0 8px 20px rgba(0,0,0,0.15);
+            margin: 1rem 0;
+        }
+
+        /* Estilo para listas dentro do conteúdo */
+        .slide-content ul, .slide-content ol {
+            text-align: left;
+            display: inline-block;
+            margin: 1rem auto;
+            padding-left: 2rem;
+        }
+
+        .slide-content li {
+            margin: 0.8rem 0;
+            line-height: 1.6;
+        }
+
+        .slide-description {
+            font-size: 1.2rem;
+            color: #2c4b5c;
+            border-top: 2px dashed #cbd5e1;
+            padding-top: 1.5rem;
+            margin-top: 0.8rem;
+        }
+
+        /* Estilo para listas na descrição */
+        .slide-description ul, .slide-description ol {
+            text-align: left;
+            display: inline-block;
+            margin: 0.5rem auto;
+            padding-left: 1.5rem;
+        }
+
+        .slide-description li {
+            margin: 0.4rem 0;
+            text-align: left;
+        }
+
+        /* Indicador de progresso estilo minimalista */
+        .slide-progress {
+            margin-top: 2rem;
+            display: flex;
+            justify-content: center;
+            gap: 0.5rem;
+            flex-wrap: wrap;
+        }
+
+        .progress-dot {
+            width: 10px;
+            height: 10px;
+            background-color: #b9d0db;
+            border-radius: 50%;
+            transition: all 0.2s;
+            display: inline-block;
+            cursor: pointer;
+        }
+
+        .progress-dot.active {
+            background-color: #1e6f5c;
+            width: 24px;
+            border-radius: 12px;
+            box-shadow: 0 0 4px #2e8b6e;
+        }
+
+        .progress-dot:hover {
+            background-color: #4f9e8c;
+            transform: scale(1.2);
+        }
+
+        /* Botões extras de navegação por toque (para mobile e teclado) */
+        .mobile-hint {
+            display: none;
+        }
+
+        /* Adaptação responsiva: tablets e celulares */
+        @media (max-width: 780px) {
+            .nav-btn {
+                flex: 0 0 70px;
+            }
+            .arrow {
+                font-size: 2.8rem;
+            }
+            .slide-card {
+                padding: 1.6rem 1.8rem;
+                border-radius: 48px 32px 48px 32px;
+            }
+            .slide-title {
+                font-size: 2rem;
+            }
+            .slide-content {
+                font-size: 1.1rem;
+            }
+            .slide-description {
+                font-size: 0.95rem;
+            }
+        }
+
+        @media (max-width: 550px) {
+            .nav-btn {
+                flex: 0 0 55px;
+            }
+            .arrow {
+                font-size: 2rem;
+            }
+            .slide-card {
+                padding: 1.2rem 1.2rem;
+            }
+        }
+
+        /* Rolagem suave e esconder scroll quando necessário (mantém elegante) */
+        .slide-area::-webkit-scrollbar {
+            width: 6px;
+            background: rgba(0,0,0,0.2);
+            border-radius: 10px;
+        }
+        .slide-area::-webkit-scrollbar-thumb {
+            background: #4f9e8c;
+            border-radius: 10px;
+        }
+
+        /* Efeito de foco acessível nos botões (navegação por teclado) */
+        .nav-btn:focus-visible {
+            outline: 3px solid #ffd966;
+            background: rgba(60, 90, 110, 0.95);
+        }
+
+        footer {
+            position: absolute;
+            bottom: 12px;
+            left: 0;
+            right: 0;
+            text-align: center;
+            font-size: 0.7rem;
+            color: rgba(255,255,210,0.5);
+            pointer-events: none;
+            z-index: 30;
+        }
+    </style>
+</head>
+<body>
+
+<div class="slideshow-container">
+    <!-- BOTÃO ESQUERDO (RECUAR / ANTERIOR) -->
+    <button class="nav-btn btn-left" id="prevSlideBtn" aria-label="Slide anterior">
+        <div class="arrow">◀</div>
+    </button>
+
+    <!-- ÁREA CENTRAL ONDE O CONTEÚDO É EXIBIDO -->
+    <main class="slide-area" id="slideArea">
+        <div class="slide-card" id="slideCard">
+            <!-- Conteúdo dinâmico preenchido via JavaScript -->
+            <div id="dynamicContent"></div>
+        </div>
+    </main>
+
+    <!-- BOTÃO DIREITO (AVANÇAR / PRÓXIMO) -->
+    <button class="nav-btn btn-right" id="nextSlideBtn" aria-label="Próximo slide">
+        <div class="arrow">▶</div>
+    </button>
+</div>
+
+<script>
+    // --------------------------------------------------------------
+    // DADOS DA APRESENTAÇÃO (SLIDES)
+    // Estrutura clara com título, conteúdo principal e descrição extra
+    // --------------------------------------------------------------
+    const slides = [
+        {
+            title: "Terapia Centrada no Cliente – Carl Rogers",
+            content: "A Natureza e o Desenvolvimento da Terapia Centrada no Cliente",
+            description: "Alunas: Luana Maurer; Raquel Brito; e Vanessa"
+        },
+        {
+            title: "O início",
+            content: "<img src='img.jpg' alt='Carl Rogers' style='max-width: 25%; border-radius: 12px; margin-top: 1rem;'>"
+        },
+        {
+            title: "Expansão da Prática",
+            content: "<ul><li>Novos locais de aplicação;</li><li>Público atendido.</li></ul>"
+        },
+        {
+            title: "Avanços na Pesquisa",
+            content: "<ul><li><strong>Gravações</strong> - Análise detalhada das sessões terapêuticas</li><li><strong>Métodos detalhados</strong> - Desenvolvimento de protocolos sistemáticos</li><li><strong>Ideia de Unificação</strong> - Integração com outras abordagens terapêuticas</li></ul>"
+        },
+        {
+            title: "Programas de Treinamento",
+            content: "<ul><li>1942 - Aumento da demanda de cursos</li><li>Associação Americana de Psicologia</li><li>Garantia de formação completa</li></ul>"
+        },
+        {
+            title: "Aplicações Práticas",
+            content: "<ul><li>Terapia Indivual e em grupo;</li><li>Uso em administração, seleção de pessoal, educação e relações humanas;</li><li>Utilizada em casos agudos e crônicos.</li></ul>"
+        },
+        {
+            title: "O Desenvolvimento da Teoria",
+            content: "<ul><li>Prática vem antes da teoria;</li><li>Utilidade da teoria.</li></ul>"
+        },
+        {
+            title: "Resumo do Capítulo",
+            content: "<ul><li>Tajetória;</li><li>Construção de conhecimento dos terapeutas.</li></ul>"
+        },
+        {
+            title: "Considerações Finais",
+            content: "<ul><li>Teoria aparece a partir da experiência real;</li></ul>"
+        },
+        {
+            title: "Momento Dinâmica",
+            content: "A Escuta que Acolhe"
+        },
+        {
+            title: "Tema:",
+            content: "<ul><li>Como me sinto em relação aos estudos/trabalho atualmente; e</li><li>Um desafio que estou enfrentando.</li></ul>"
+        },
+        {
+            title: "Regras:",
+            content: "<ul><li>Pessoa A: Fala por 2 minutos sobre o tema, livremente.</li><li>Pessoa B: Deve apenas ouvir com atenção. Não pode dar conselhos, não pode julgar, não pode interromper e nem dizer 'eu também passei por isso'. O foco é totalmente na pessoa que está falando.</li></ul>"
+        }
+    ];
+
+    // Variável de controle do slide atual (zero-index)
+    let currentSlideIndex = 0;
+    const totalSlides = slides.length;
+
+    // Elementos DOM
+    const dynamicContainer = document.getElementById('dynamicContent');
+    const prevBtn = document.getElementById('prevSlideBtn');
+    const nextBtn = document.getElementById('nextSlideBtn');
+    const slideCardElement = document.getElementById('slideCard');
+
+    // Função para escapar caracteres especiais (evitar XSS e manter segurança)
+    function escapeHtml(str) {
+        if (!str) return '';
+        return str
+            .replace(/&/g, '&amp;')
+            .replace(/</g, '&lt;')
+            .replace(/>/g, '&gt;')
+            .replace(/"/g, '&quot;')
+            .replace(/'/g, '&#39;');
+    }
+
+    // Função para renderizar conteúdo de forma segura
+    function renderContent(content) {
+        if (!content) return '';
+        
+        // Se o conteúdo contém tags HTML, renderiza como HTML
+        if (content.includes('<img') || content.includes('<iframe') || content.includes('<video') || content.includes('<ul') || content.includes('<ol') || content.includes('<li') || content.includes('<strong')) {
+            return content; // Retorna o HTML bruto
+        }
+        
+        // Para texto normal, escapa os caracteres especiais e converte quebras de linha
+        return escapeHtml(content).replace(/\n/g, '<br>');
+    }
+
+    // Função para renderizar a descrição de forma segura
+    function renderDescription(description) {
+        if (!description) return '';
+        
+        // Se a descrição contém tags HTML, renderiza como HTML
+        if (description.includes('<ul') || description.includes('<ol') || description.includes('<li')) {
+            return description;
+        }
+        
+        // Para texto normal, escapa e converte quebras de linha
+        return escapeHtml(description).replace(/\n/g, '<br>');
+    }
+
+    // Função para renderizar o conteúdo do slide baseado no índice atual
+    function renderSlide() {
+        // Garantir que o índice esteja dentro dos limites
+        if (currentSlideIndex < 0) currentSlideIndex = 0;
+        if (currentSlideIndex >= totalSlides) currentSlideIndex = totalSlides - 1;
+        
+        const slideData = slides[currentSlideIndex];
+        
+        // Construir o HTML interno com base no slide atual
+        const htmlContent = `
+            <div class="slide-title">${escapeHtml(slideData.title)}</div>
+            <div class="slide-content">${renderContent(slideData.content)}</div>
+            <div class="slide-description">${renderDescription(slideData.description)}</div>
+            <div class="slide-progress" id="progressDotsContainer">
+                ${generateProgressDots()}
+            </div>
+        `;
+        
+        // Aplica o novo conteúdo com fade
+        slideCardElement.style.animation = 'none';
+        dynamicContainer.innerHTML = htmlContent;
+        // Força reflow para reiniciar animação
+        void slideCardElement.offsetHeight;
+        slideCardElement.style.animation = 'fadeSlide 0.4s ease-out';
+        
+        // Atualizar os dots ativos
+        updateActiveDot();
+        
+        // Atualizar atributos ARIA para acessibilidade
+        document.getElementById('slideArea').setAttribute('aria-label', `Slide ${currentSlideIndex+1} de ${totalSlides}`);
+    }
+    
+    // Gera os pontinhos indicadores de progresso
+    function generateProgressDots() {
+        let dotsHtml = '';
+        for (let i = 0; i < totalSlides; i++) {
+            const activeClass = (i === currentSlideIndex) ? 'active' : '';
+            dotsHtml += `<span class="progress-dot ${activeClass}" data-index="${i}"></span>`;
+        }
+        return dotsHtml;
+    }
+    
+    // Atualiza a classe active nos dots após renderização
+    function updateActiveDot() {
+        const dots = document.querySelectorAll('.progress-dot');
+        dots.forEach((dot, idx) => {
+            if (idx === currentSlideIndex) {
+                dot.classList.add('active');
+            } else {
+                dot.classList.remove('active');
+            }
+        });
+        
+        // Adicionar evento de clique nos dots para navegação rápida
+        dots.forEach(dot => {
+            dot.removeEventListener('click', dotClickHandler);
+            dot.addEventListener('click', dotClickHandler);
+        });
+    }
+    
+    // Função para manipular clique nos dots
+    function dotClickHandler(event) {
+        const targetDot = event.currentTarget;
+        const indexAttr = targetDot.getAttribute('data-index');
+        if (indexAttr !== null) {
+            let newIndex = parseInt(indexAttr, 10);
+            if (!isNaN(newIndex) && newIndex !== currentSlideIndex && newIndex >= 0 && newIndex < totalSlides) {
+                currentSlideIndex = newIndex;
+                renderSlide();
+                slideCardElement.scrollIntoView({ behavior: 'smooth', block: 'nearest' });
+            }
+        }
+    }
+    
+    // Função para avançar para o próximo slide
+    function nextSlide() {
+        if (currentSlideIndex + 1 < totalSlides) {
+            currentSlideIndex++;
+            renderSlide();
+        } else {
+            // Efeito visual de fim da apresentação
+            slideCardElement.style.transform = 'scale(1.01)';
+            setTimeout(() => {
+                if (slideCardElement) slideCardElement.style.transform = '';
+            }, 200);
+        }
+    }
+    
+    // Função para voltar ao slide anterior
+    function prevSlide() {
+        if (currentSlideIndex - 1 >= 0) {
+            currentSlideIndex--;
+            renderSlide();
+        } else {
+            // feedback visual de início
+            slideCardElement.style.transform = 'scale(1.01)';
+            setTimeout(() => {
+                if (slideCardElement) slideCardElement.style.transform = '';
+            }, 200);
+        }
+    }
+    
+    // Eventos dos botões laterais
+    prevBtn.addEventListener('click', (e) => {
+        e.preventDefault();
+        prevSlide();
+        prevBtn.blur();
+    });
+    
+    nextBtn.addEventListener('click', (e) => {
+        e.preventDefault();
+        nextSlide();
+        nextBtn.blur();
+    });
+    
+    // Suporte a teclado (setas esquerda/direita)
+    window.addEventListener('keydown', (e) => {
+        if (e.key === 'ArrowLeft') {
+            e.preventDefault();
+            prevSlide();
+            prevBtn.style.transform = 'scale(0.96)';
+            setTimeout(() => { if(prevBtn) prevBtn.style.transform = ''; }, 120);
+        } else if (e.key === 'ArrowRight') {
+            e.preventDefault();
+            nextSlide();
+            nextBtn.style.transform = 'scale(0.96)';
+            setTimeout(() => { if(nextBtn) nextBtn.style.transform = ''; }, 120);
+        }
+    });
+    
+    // Suporte para dispositivos móveis (touch)
+    prevBtn.addEventListener('touchstart', (e) => {
+        e.preventDefault();
+        prevSlide();
+    }, { passive: false });
+    
+    nextBtn.addEventListener('touchstart', (e) => {
+        e.preventDefault();
+        nextSlide();
+    }, { passive: false });
+    
+    // Tooltips nos botões
+    prevBtn.setAttribute('title', 'Slide anterior (←)');
+    nextBtn.setAttribute('title', 'Próximo slide (→)');
+    
+    // Inicializar o primeiro slide
+    renderSlide();
+    
+    console.log(`Apresentação carregada com ${totalSlides} slides. Use botões laterais ou setas do teclado.`);
+</script>
+</body>
+</html>
